@@ -28,9 +28,6 @@ const ProfilePage = () => {
       {/* Particules d'arrière-plan */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="w-full h-full bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.2)_0%,transparent_60%),radial-gradient(circle_at_70%_70%,rgba(255,255,255,0.15)_0%,transparent_60%)] animate-pulse" />
-        <div className="absolute top-0 left-0 w-96 h-96 bg-pink-400 opacity-30 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-400 opacity-30 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-0 left-20 w-96 h-96 bg-indigo-400 opacity-30 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
       </div>
 
       {/* Contenu principal */}

@@ -11,10 +11,12 @@ export const TaskProvider = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token'); // Récupère le token JWT
+      console.log('Token récupéré:', token); // Log pour vérifier le token
+
       const response = await fetch('http://localhost:5000/api/tasks', {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // Ajoute le token dans les headers
         },
       });
 
@@ -24,7 +26,7 @@ export const TaskProvider = ({ children }) => {
       }
 
       const data = await response.json();
-      setTasks(data);
+      setTasks(data); // Met à jour la liste des tâches
     } catch (err) {
       setError(err.message);
     } finally {
@@ -35,6 +37,8 @@ export const TaskProvider = ({ children }) => {
   const addTask = async (taskData) => {
     try {
       const token = localStorage.getItem('token'); // Récupère le token JWT
+      console.log('Token envoyé:', token); // Log pour vérifier le token
+
       const response = await fetch('http://localhost:5000/api/tasks', {
         method: 'POST',
         headers: {

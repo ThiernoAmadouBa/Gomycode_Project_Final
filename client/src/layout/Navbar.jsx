@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from "../contexts/AuthContextTemps";
-import { LogOut, User, LayoutDashboard, LogIn, UserPlus, Home } from 'lucide-react';
+import { LogOut, User, LayoutDashboard, LogIn, UserPlus, Home, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // État pour gérer l'ouverture du menu
 
   const handleLogout = () => {
     if (logout) {
@@ -12,6 +13,10 @@ const Navbar = () => {
     } else {
       console.error("La fonction logout n'est pas définie.");
     }
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen); // Inverse l'état du menu
   };
 
   return (
@@ -22,8 +27,21 @@ const Navbar = () => {
           Task<span className="text-yellow-300">Manager</span>
         </Link>
 
+        {/* Bouton hamburger pour le responsive */}
+        <button
+          onClick={toggleMenu}
+          className="lg:hidden text-white focus:outline-none"
+          aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+        >
+          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+
         {/* Liens de navigation */}
-        <div className="flex items-center space-x-6 text-lg font-semibold">
+        <div
+          className={`${
+            isMenuOpen ? "block" : "hidden"
+          } lg:flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-6 text-lg font-semibold`}
+        >
           <Link to="/" className="flex items-center gap-2 hover:text-yellow-200 transition" aria-label="Accueil">
             <Home size={22} /> Accueil
           </Link>
