@@ -33,10 +33,7 @@ const registerUser = async (req, res) => {
 
     await user.save();
 
-    // Générer un token JWT
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    res.status(201).json({ user: { id: user._id, name: user.name, email: user.email }, token });
+    res.status(201).json({ message: 'Utilisateur créé avec succès.' });
   } catch (err) {
     console.error('Erreur lors de l\'inscription:', err.message);
     res.status(500).json({ message: 'Erreur interne du serveur' });
@@ -45,7 +42,7 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const {name, email, password } = req.body;
 
     // Vérifiez si l'email et le mot de passe sont fournis
     if (!email || !password) {

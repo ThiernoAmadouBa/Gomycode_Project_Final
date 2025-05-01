@@ -19,7 +19,8 @@ const Login = () => {
 
     try {
       const data = await authService.login(formData);
-      localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('user', JSON.stringify(data.user)); // Stocke les informations utilisateur
+      console.log('Nom de l\'utilisateur connecté:', data.user.name); // Affiche le nom de l'utilisateur
       navigate('/dashboard');
     } catch (err) {
       setError(err.message || 'Impossible de se connecter. Veuillez vérifier vos identifiants.');

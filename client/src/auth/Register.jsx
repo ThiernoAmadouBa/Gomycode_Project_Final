@@ -8,6 +8,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    name: '', // Ajout du champ "name"
     email: '',
     password: ''
   });
@@ -24,7 +25,7 @@ const Register = () => {
     setError('');
     setLoading(true);
 
-    if (!formData.email || !formData.password) {
+    if (!formData.name || !formData.email || !formData.password) {
       setError('Tous les champs sont obligatoires.');
       setLoading(false);
       return;
@@ -43,7 +44,11 @@ const Register = () => {
     }
 
     try {
-      await register({ email: formData.email, password: formData.password });
+      await register({
+        name: formData.name, // Inclure le champ "name"
+        email: formData.email,
+        password: formData.password
+      });
       navigate('/dashboard');
     } catch (err) {
       console.error(err);
@@ -77,6 +82,25 @@ const Register = () => {
             {error}
           </div>
         )}
+
+        <div className="mb-4">
+          <label
+            htmlFor="name"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Nom
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Entrez votre nom"
+            required
+          />
+        </div>
 
         <div className="mb-4">
           <label
