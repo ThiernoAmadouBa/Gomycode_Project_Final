@@ -15,7 +15,7 @@ export default defineConfig({
     open: true, // Ouvre automatiquement le navigateur
     proxy: {
       '/api': {
-        target: 'http://localhost:5000', // Proxy pour les requêtes API
+        target: 'https://gomycode-project-final.onrender.com', // Proxy pour les requêtes API
         changeOrigin: true,
         secure: false,
       },

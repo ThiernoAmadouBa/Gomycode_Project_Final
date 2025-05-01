@@ -1,7 +1,7 @@
 // src/services/api.js
 
 // URL de l'API backend
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'; // Utilisation de import.meta.env pour Vite
+const API_URL = import.meta.env.VITE_API_URL || 'https://gomycode-project-final.onrender.com/api'; // Utilisation de import.meta.env pour Vite
 
 
 

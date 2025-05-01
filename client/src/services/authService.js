@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // Utilisation de la variable d'environnement pour définir l'URL de l'API
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://gomycode-project-final.onrender.com/api';
 
 // Inscription d'un utilisateur
 const register = async (userData) => {
@@ -28,7 +28,7 @@ const register = async (userData) => {
 };
 
 // Exemple d'utilisation de la fonction d'inscription
-fetch('http://localhost:5000/api/auth/register', {
+fetch('https://gomycode-project-final.onrender.com/api/auth/register', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ fetch('http://localhost:5000/api/auth/register', {
 // Connexion d'un utilisateur
 const login = async ({ email, password }) => {
   try {
-    const response = await fetch('http://localhost:5000/api/auth/login', {
+    const response = await fetch('https://gomycode-project-final.onrender.com/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
