@@ -17,7 +17,20 @@ connectDB();
 const app = express();
 
 // Utiliser CORS pour permettre les requêtes cross-origin
-app.use(cors({ origin: 'https://task-managing-application-loving.netlify.app/' }));
+const allowedOrigins = [
+  'https://task-managing-application-loving.netlify.app',
+  'http://localhost:3000', // Ajoutez l'origine locale si vous testez en local
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+}));
 
 // Middleware pour parser le body en JSON
 app.use(express.json());
