@@ -1,5 +1,4 @@
 // src/services/authService.js
-import axios from 'axios';
 
 // Utilisation de la variable d'environnement pour définir l'URL de l'API
 const API_URL = import.meta.env.VITE_API_URL || 'https://gomycode-project-final.onrender.com/api';
@@ -20,29 +19,20 @@ const register = async (userData) => {
       throw new Error(errorData.message || 'Erreur lors de l’inscription');
     }
 
-    return await response.json();
+    const data = await response.json();
+    localStorage.setItem('token', data.token); // Stocke le token
+    localStorage.setItem('user', JSON.stringify(data.user)); // Stocke les infos utilisateur
+    return data;
   } catch (error) {
     console.error('Erreur lors de l’inscription:', error.message);
     throw error;
   }
 };
 
-// Exemple d'utilisation de la fonction d'inscription
-fetch('https://gomycode-project-final.onrender.com/api/auth/register', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ email: 'test@example.com', password: 'password123' }),
-})
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Erreur:', error));
-
 // Connexion d'un utilisateur
 const login = async ({ email, password }) => {
   try {
-    const response = await fetch('https://gomycode-project-final.onrender.com/api/auth/login', {
+    const response = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +46,8 @@ const login = async ({ email, password }) => {
     }
 
     const data = await response.json();
-    localStorage.setItem('token', data.token); // Stocke le token JWT
+    localStorage.setItem('token', data.token); // Stocke le token
+    localStorage.setItem('user', JSON.stringify(data.user)); // Stocke l'utilisateur
     return data;
   } catch (error) {
     console.error('Erreur lors de la connexion:', error.message);
@@ -66,7 +57,8 @@ const login = async ({ email, password }) => {
 
 // Déconnexion de l'utilisateur
 const logout = () => {
-  localStorage.removeItem('user'); // Supprime l'utilisateur du stockage local
+  localStorage.removeItem('user');
+  localStorage.removeItem('token');
 };
 
 // Récupération des informations de l'utilisateur connecté
@@ -80,9 +72,9 @@ const getUser = () => {
   }
 };
 
-// Fonction pour vérifier si l'utilisateur est authentifié
+// Vérifie si un utilisateur est authentifié
 const isAuthenticated = () => {
-  return !!getUser();
+  return !!localStorage.getItem('token');
 };
 
 export default {
@@ -92,5 +84,3 @@ export default {
   getUser,
   isAuthenticated,
 };
-
-

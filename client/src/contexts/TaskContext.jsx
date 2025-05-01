@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 
 export const TaskContext = createContext();
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
@@ -14,7 +15,7 @@ export const TaskProvider = ({ children }) => {
       const token = localStorage.getItem('token'); // Récupère le token JWT
       console.log('Token récupéré:', token); // Log pour vérifier le token
 
-      const response = await fetch('https://gomycode-project-final.onrender.com/api/tasks', {
+      const response = await fetch(`${API_URL}/tasks`, {
         headers: {
           Authorization: `Bearer ${token}`, // Ajoute le token dans les headers
         },
@@ -39,7 +40,7 @@ export const TaskProvider = ({ children }) => {
       const token = localStorage.getItem('token'); // Récupère le token JWT
       console.log('Token envoyé:', token); // Log pour vérifier le token
 
-      const response = await fetch('https://gomycode-project-final.onrender.com/api/tasks', {
+      const response = await fetch(`${API_URL}/tasks`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import authService from '../services/authService'; // Assurez-vous que le chemin est correct
 
 const AuthContext = createContext();
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Vérifie si l'utilisateur est connecté à chaque chargement de la page
   useEffect(() => {
     const userData = localStorage.getItem('user');
     if (userData) {
@@ -19,39 +19,36 @@ const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  // Gestion de la connexion
   const handleLogin = async (credentials) => {
     try {
-      const loggedInUser = await login(credentials); // Appel de la fonction login
+      const loggedInUser = await login(credentials);
       setUser(loggedInUser);
       localStorage.setItem('user', JSON.stringify(loggedInUser));
-      navigate('/dashboard'); // Redirection vers le tableau de bord
+      navigate('/dashboard');
     } catch (error) {
       console.error('Erreur lors de la connexion:', error.message || error);
       throw new Error('Impossible de se connecter. Veuillez vérifier vos identifiants.');
     }
   };
 
-  // Gestion de l'inscription
   const handleRegister = async (userData) => {
     try {
-      const newUser = await authService.register(userData); // Appel de la fonction register
+      const newUser = await authService.register(userData);
       setUser(newUser);
       localStorage.setItem('user', JSON.stringify(newUser));
-      navigate('/dashboard'); // Redirection vers le tableau de bord
+      navigate('/dashboard');
     } catch (error) {
-      console.error('Erreur lors de l\'inscription:', error.message || error);
-      throw new Error('Impossible de s\'inscrire. Veuillez réessayer.');
+      console.error("Erreur lors de l'inscription:", error.message || error);
+      throw new Error("Impossible de s'inscrire. Veuillez réessayer.");
     }
   };
 
-  // Gestion de la déconnexion
   const handleLogout = () => {
     try {
-      authService.logout(); // Appel de la fonction logout
+      authService.logout();
       setUser(null);
       localStorage.removeItem('user');
-      navigate('/'); // Redirection vers la page d'accueil
+      navigate('/');
     } catch (error) {
       console.error('Erreur lors de la déconnexion:', error.message || error);
     }
@@ -72,9 +69,10 @@ const AuthProvider = ({ children }) => {
   );
 };
 
+// Fonction login séparée
 const login = async ({ email, password }) => {
   try {
-    const response = await fetch('https://gomycode-project-final.onrender.com/api/auth/login', {
+    const response = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -88,7 +86,6 @@ const login = async ({ email, password }) => {
     }
 
     const data = await response.json();
-    localStorage.setItem('user', JSON.stringify(data)); // Stocke les informations utilisateur
     return data;
   } catch (error) {
     console.error('Erreur lors de la connexion:', error.message);
@@ -97,4 +94,3 @@ const login = async ({ email, password }) => {
 };
 
 export { AuthProvider, AuthContext };
-
