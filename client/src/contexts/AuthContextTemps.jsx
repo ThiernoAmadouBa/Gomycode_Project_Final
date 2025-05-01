@@ -33,13 +33,13 @@ const AuthProvider = ({ children }) => {
 
   const handleRegister = async (userData) => {
     try {
-      const newUser = await authService.register(userData);
-      setUser(newUser);
-      localStorage.setItem('user', JSON.stringify(newUser));
-      navigate('/dashboard');
+      const newUser = await authService.register(userData); // Appelle le service d'inscription
+      setUser(newUser); // Met à jour l'utilisateur dans le contexte
+      localStorage.setItem('user', JSON.stringify(newUser)); // Stocke l'utilisateur dans localStorage
+      navigate('/dashboard'); // Redirige vers le tableau de bord
     } catch (error) {
       console.error("Erreur lors de l'inscription:", error.message || error);
-      throw new Error("Impossible de s'inscrire. Veuillez réessayer.");
+      throw new Error(error.message || "Impossible de s'inscrire. Veuillez réessayer.");
     }
   };
 
