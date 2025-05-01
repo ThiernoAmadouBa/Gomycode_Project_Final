@@ -19,7 +19,7 @@ const app = express();
 // Utiliser CORS pour permettre les requêtes cross-origin
 const allowedOrigins = [
   'https://task-managing-application-loving.netlify.app',
-  'http://localhost:3000', // Ajoutez l'origine locale si vous testez en local
+  'http://localhost:4000', // Ajoutez l'origine locale si vous testez en local
 ];
 
 app.use(cors({

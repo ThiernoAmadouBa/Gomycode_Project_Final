@@ -25,33 +25,17 @@ const Register = () => {
     setError('');
     setLoading(true);
 
-    if (!formData.name || !formData.email || !formData.password) {
-      setError('Tous les champs sont obligatoires.');
-      setLoading(false);
-      return;
-    }
-
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      setError('Veuillez entrer un email valide.');
-      setLoading(false);
-      return;
-    }
-
-    if (formData.password.length < 6) {
-      setError('Le mot de passe doit contenir au moins 6 caractères.');
-      setLoading(false);
-      return;
-    }
+    console.log('Données envoyées pour l\'inscription:', formData); // Log des données
 
     try {
       await register({
-        name: formData.name, // Inclure le champ "name"
+        name: formData.name,
         email: formData.email,
-        password: formData.password
+        password: formData.password,
       });
       navigate('/dashboard');
     } catch (err) {
-      console.error(err);
+      console.error('Erreur lors de l\'inscription:', err.message); // Log des erreurs
       setError('Erreur lors de l’inscription. Veuillez réessayer.');
     } finally {
       setLoading(false);
