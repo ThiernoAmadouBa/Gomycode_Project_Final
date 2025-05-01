@@ -17,13 +17,18 @@ const Login = () => {
     setError('');
     setLoading(true);
 
+    console.log('Données envoyées pour l\'inscription:', formData); // Log des données
+
     try {
-      const data = await authService.login(formData);
-      localStorage.setItem('user', JSON.stringify(data.user)); // Stocke les informations utilisateur
-      console.log('Nom de l\'utilisateur connecté:', data.user.name); // Affiche le nom de l'utilisateur
+      await register({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
       navigate('/dashboard');
     } catch (err) {
-      setError(err.message || 'Impossible de se connecter. Veuillez vérifier vos identifiants.');
+      console.error('Erreur lors de l\'inscription:', err.message);
+      setError('Erreur lors de l’inscription. Veuillez réessayer.');
     } finally {
       setLoading(false);
     }
