@@ -33,13 +33,24 @@ const AuthProvider = ({ children }) => {
 
   const handleRegister = async (userData) => {
     try {
-      const newUser = await authService.register(userData); // Appelle le service d'inscription
-      setUser(newUser); // Met à jour l'utilisateur dans le contexte
-      localStorage.setItem('user', JSON.stringify(newUser)); // Stocke l'utilisateur dans localStorage
-      navigate('/dashboard'); // Redirige vers le tableau de bord
+      const response = await fetch(`${API_URL}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Erreur lors de l\'inscription');
+      }
+
+      const data = await response.json();
+      return data; // Retourne les données utilisateur
     } catch (error) {
-      console.error("Erreur lors de l'inscription:", error.message || error);
-      throw new Error(error.message || "Impossible de s'inscrire. Veuillez réessayer.");
+      console.error('Erreur lors de l\'inscription:', error.message);
+      throw error;
     }
   };
 
