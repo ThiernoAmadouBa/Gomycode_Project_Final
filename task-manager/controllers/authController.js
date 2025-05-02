@@ -13,31 +13,28 @@ const generateToken = (user) => {
 
 const registerUser = async (req, res) => {
   try {
-    console.log('Données reçues pour l\'inscription:', req.body); // Log des données reçues
+    console.log('Données reçues pour l\'inscription:', req.body);
 
     const { name, email, password } = req.body;
 
-    // Vérifiez si l'utilisateur existe déjà
+    if (!name || !email || !password) {
+      console.error('Champs requis manquants');
+      return res.status(400).json({ message: 'Tous les champs sont requis.' });
+    }
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
+      console.error('Utilisateur déjà existant avec cet email:', email);
       return res.status(400).json({ message: 'Cet email est déjà utilisé.' });
     }
 
-    // Hachez le mot de passe
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Créez un nouvel utilisateur
-    const user = new User({
-      name,
-      email,
-      password: hashedPassword,
-    });
-
+    const user = new User({ name, email, password });
     await user.save();
+    console.log('Utilisateur créé avec succès:', user);
 
     res.status(201).json({ message: 'Utilisateur créé avec succès.' });
   } catch (err) {
-    console.error('Erreur lors de l\'inscription:', err.message); // Log des erreurs
+    console.error('Erreur lors de l\'inscription:', err.message);
     res.status(500).json({ message: 'Erreur interne du serveur' });
   }
 };
