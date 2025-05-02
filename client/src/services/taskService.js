@@ -1,9 +1,9 @@
-const API_URL = import.meta.env.VITE_API_URL || 'https://gomycode-project-final.onrender.com/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://gomycode-project-final.onrender.com';
 
 const addTask = async (taskData) => {
   try {
     const token = localStorage.getItem('token'); // Récupère le token JWT
-    const response = await fetch(`${API_URL}/tasks`, {
+    const response = await fetch(`${API_URL}/api/tasks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ const addTask = async (taskData) => {
 // Fonction pour récupérer les tâches
 const getAllTasks = async () => {
   const token = localStorage.getItem('token');
-  const response = await fetch(`${API_URL}/tasks`, {
+  const response = await fetch(`${API_URL}/api/tasks`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ const getAllTasks = async () => {
 const deleteTask = async (taskId) => {
   try {
     const token = localStorage.getItem('token'); // Récupère le token JWT
-    const response = await fetch(`${API_URL}/tasks/${taskId}`, {
+    const response = await fetch(`${API_URL}/api/tasks/${taskId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`, // Envoie le token JWT
@@ -69,7 +69,7 @@ const deleteTask = async (taskId) => {
 const updateTask = async (taskId, updatedData) => {
   try {
     const token = localStorage.getItem('token'); // Récupère le token JWT
-    const response = await fetch(`${API_URL}/tasks/${taskId}`, {
+    const response = await fetch(`${API_URL}/api/tasks/${taskId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

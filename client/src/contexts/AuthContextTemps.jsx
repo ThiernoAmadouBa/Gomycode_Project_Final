@@ -35,7 +35,7 @@ const AuthProvider = ({ children }) => {
     try {
       console.log('Données envoyées au backend:', userData); // Log des données
 
-      const response = await fetch(`${API_URL}/auth/register`, {
+      const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ const AuthProvider = ({ children }) => {
 // Fonction login séparée
 const login = async ({ email, password }) => {
   try {
-    const response = await fetch(`${API_URL}/auth/login`, {
+    const response = await fetch(`${API_URL}/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

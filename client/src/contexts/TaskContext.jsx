@@ -15,7 +15,7 @@ export const TaskProvider = ({ children }) => {
       const token = localStorage.getItem('token'); // Récupère le token JWT
       console.log('Token récupéré:', token); // Log pour vérifier le token
 
-      const response = await fetch(`${API_URL}/tasks`, {
+      const response = await fetch(`${API_URL}/api/tasks`, {
         headers: {
           Authorization: `Bearer ${token}`, // Ajoute le token dans les headers
         },
@@ -40,7 +40,7 @@ export const TaskProvider = ({ children }) => {
       const token = localStorage.getItem('token'); // Récupère le token JWT
       console.log('Token envoyé:', token); // Log pour vérifier le token
 
-      const response = await fetch(`${API_URL}/tasks`, {
+      const response = await fetch(`${API_URL}/api/tasks`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

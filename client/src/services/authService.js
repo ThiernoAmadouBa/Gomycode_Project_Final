@@ -1,7 +1,7 @@
 // src/services/authService.js
 
 // Utilisation de la variable d'environnement pour définir l'URL de l'API
-const API_URL = import.meta.env.VITE_API_URL || 'https://gomycode-project-final.onrender.com/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://gomycode-project-final.onrender.com';
 
 // Inscription d'un utilisateur
 const register = async (userData) => {
@@ -32,7 +32,7 @@ const register = async (userData) => {
 // Connexion d'un utilisateur
 const login = async ({ email, password }) => {
   try {
-    const response = await fetch(`${API_URL}/auth/login`, {
+    const response = await fetch(`${API_URL}/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
