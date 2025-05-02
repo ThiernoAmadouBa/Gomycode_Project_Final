@@ -13,7 +13,7 @@ const generateToken = (user) => {
 
 const registerUser = async (req, res) => {
   try {
-    console.log('Données reçues pour l\'inscription:', req.body);
+    console.log('Données reçues pour l\'inscription:', req.body); // Log des données reçues
 
     const { name, email, password } = req.body;
 
@@ -34,7 +34,7 @@ const registerUser = async (req, res) => {
 
     res.status(201).json({ message: 'Utilisateur créé avec succès.' });
   } catch (err) {
-    console.error('Erreur lors de l\'inscription:', err.message);
+    console.error('Erreur lors de l\'inscription:', err.message); // Log des erreurs
     res.status(500).json({ message: 'Erreur interne du serveur' });
   }
 };

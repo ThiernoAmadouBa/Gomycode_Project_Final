@@ -33,6 +33,8 @@ const AuthProvider = ({ children }) => {
 
   const handleRegister = async (userData) => {
     try {
+      console.log('Données envoyées au backend:', userData); // Log des données
+
       const response = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: {
@@ -43,13 +45,15 @@ const AuthProvider = ({ children }) => {
 
       if (!response.ok) {
         const errorData = await response.json();
+        console.error('Erreur du backend:', errorData); // Log des erreurs du backend
         throw new Error(errorData.message || 'Erreur lors de l\'inscription');
       }
 
       const data = await response.json();
-      return data; // Retourne les données utilisateur
+      console.log('Réponse du backend:', data); // Log de la réponse
+      return data;
     } catch (error) {
-      console.error('Erreur lors de l\'inscription:', error.message);
+      console.error('Erreur lors de l\'inscription:', error.message); // Log des erreurs
       throw error;
     }
   };
