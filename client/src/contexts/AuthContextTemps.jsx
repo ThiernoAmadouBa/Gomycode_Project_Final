@@ -2,6 +2,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authService from '../services/authService'; // Assurez-vous que le chemin est correct
+import api from '../services/api';
 
 const AuthContext = createContext();
 const API_URL = import.meta.env.VITE_API_URL;
@@ -21,39 +22,25 @@ const AuthProvider = ({ children }) => {
 
   const handleLogin = async (credentials) => {
     try {
-      const loggedInUser = await login(credentials);
-      setUser(loggedInUser);
-      localStorage.setItem('user', JSON.stringify(loggedInUser));
+      console.log('Données envoyées pour la connexion:', credentials);
+      const data = await api.post('/auth/login', credentials);
+      setUser(data);
+      localStorage.setItem('user', JSON.stringify(data));
       navigate('/dashboard');
     } catch (error) {
-      console.error('Erreur lors de la connexion:', error.message || error);
+      console.error('Erreur lors de la connexion:', error.message);
       throw new Error('Impossible de se connecter. Veuillez vérifier vos identifiants.');
     }
   };
 
   const handleRegister = async (userData) => {
     try {
-      console.log('Données envoyées au backend:', userData); // Log des données
-
-      const response = await fetch(`${API_URL}/api/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Erreur du backend:', errorData); // Log des erreurs du backend
-        throw new Error(errorData.message || 'Erreur lors de l\'inscription');
-      }
-
-      const data = await response.json();
-      console.log('Réponse du backend:', data); // Log de la réponse
+      console.log('Données envoyées au backend:', userData);
+      const data = await api.post('/auth/register', userData);
+      console.log('Réponse du backend:', data);
       return data;
     } catch (error) {
-      console.error('Erreur lors de l\'inscription:', error.message); // Log des erreurs
+      console.error('Erreur lors de l\'inscription:', error.message);
       throw error;
     }
   };
@@ -82,30 +69,6 @@ const AuthProvider = ({ children }) => {
       {!loading && children}
     </AuthContext.Provider>
   );
-};
-
-// Fonction login séparée
-const login = async ({ email, password }) => {
-  try {
-    const response = await fetch(`${API_URL}/api/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Erreur lors de la connexion');
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Erreur lors de la connexion:', error.message);
-    throw error;
-  }
 };
 
 export { AuthProvider, AuthContext };
