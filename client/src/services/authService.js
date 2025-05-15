@@ -1,7 +1,7 @@
 // src/services/authService.js
 
 // Utilisation de la variable d'environnement pour définir l'URL de l'API
-const API_URL = import.meta.env.VITE_API_URL || 'https://gomycode-project-final.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL || 'https://gomycode-project-final.onrender.com/api';
 
 // Inscription d'un utilisateur
 const register = async (userData) => {

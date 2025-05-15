@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || 'https://gomycode-project-final.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL || 'https://gomycode-project-final.onrender.com/api';
 
 const addTask = async (taskData) => {
   try {
